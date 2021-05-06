@@ -1,0 +1,23 @@
+[
+	{
+		"query" : "SELECT * FROM V$CPOOL_STATS",
+		"name" : "Database",
+		"type" : "metric",
+		"database" : "databaseName",
+		"provider" : "Oracle"
+	},
+	{
+		"query" : "SELECT TABLESPACE_NAME, sum(BYTES) FROM sys.dba_data_files GROUP BY TABLESPACE_NAME",
+		"name" : "Database",
+		"type" : "metric",
+		"database" : "databaseName",
+		"provider" : "Oracle"
+	},
+	{
+		"query" : "SELECT METRIC_NAME, VALUE, BEGIN_TIME FROM GV$SYSMETRIC WHERE METRIC_NAME IN ('Buffer Cache Hit Ratio','Cursor Cache Hit Ration','Library Cache Hit Ration','Shared Pool Free %','Physical Reads Per Sec','Physical Writes Per Sec','Enqueue Timeouts Per Sec','GC CR Block Received Per Second','Global Cache Blocks Corrupted','Global Cache Blocks Lost','Logons Per Sec','Average Active Sessions','Long Table Scans Per Sec','SQL Service Response Time','User Rollbacks Per Sec','Total Sorts Per User Call','Rows Per Sort','Disk Sort Per Sec','Memory Sorts Ratio','Database Wait Time Ratio','Session Limit %','Temp Space Used')",
+		"name" : "Database",
+		"type" : "metric",
+		"database" : "databaseName",
+		"provider" : "Oracle"
+	}
+]

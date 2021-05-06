@@ -1,0 +1,27 @@
+{
+  "global": {
+    "account_id": "insert_your_RPM_account_ID_here",
+    "insights_mode": {
+      "insights_insert_key": "insert_your_insights_insert_key_here"
+    },
+    "proxy": {
+      "proxy_host": "enter_proxy_host",
+      "proxy_port": 8080,
+      "proxy_username": "enter_proxy_username",
+      "proxy_password": "enter_proxy_password"
+    }
+  },
+  "agents": [
+    {
+      "name": "INSTANCE NAME",
+      "host": "HOST",
+      "port": 12345,
+      "username": "DB USER",
+      "password": "ENCRYPTED PASSWORD",
+      "inputfile": "PATH TO QUERY JSON FILE",
+      "sslConnection": true,
+      "sslTrustStoreLocation": "TRUST STORE LOCATION",
+      "sslTrustStorePassword": "ENCRYPTED TRUST STORE PASSWORD"
+    }
+  ]
+}

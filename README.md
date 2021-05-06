@@ -24,6 +24,26 @@
 
 >[**Optional** - Include instructions on how to run tests if we include tests with the codebase. Remove this section if it's not needed.]
 
+### Integration Testing
+
+#### MySQL
+
+```sh
+docker run --rm --name mysql -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql:latest
+```
+
+#### Postgres
+
+```sh
+docker run --name postgres -e POSTGRES_PASSWORD=root -d --rm -p 5432:5432 postgres
+```
+
+#### DB/2
+
+```sh
+docker run -itd --name db2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=root -e DBNAME=testdb ibmcom/db2
+```
+
 ## Support
 
 New Relic has open-sourced this project. This project is provided AS-IS WITHOUT WARRANTY OR DEDICATED SUPPORT. Issues and contributions should be reported to the project here on GitHub.

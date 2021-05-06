@@ -18,16 +18,16 @@
 .project
 .settings/
 .gradle
-bin/
+.checkstyle
+*.jpage
 
 # IntelliJ files
-
 *.iml
 *.iws
 *.ipr
 .idea/
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.nar
@@ -39,8 +39,15 @@ bin/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+# The wierd MacOS files
+.DS_Store
+
 # Ignore Gradle build output directory
 build
 
 # Jenv
 .java-version
+
+# Ignore the local plugin.json
+config/plugin.json
+/build-default/

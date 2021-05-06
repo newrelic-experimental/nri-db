@@ -1,0 +1,110 @@
+[{
+	"query" : "SELECT DBPARTITIONNUM, MAX_PARTITION_MEM/1048576 AS MAX_MEM_MB, CURRENT_PARTITION_MEM/1048576 AS CURRENT_MEM_MB FROM TABLE (SYSPROC.ADMIN_GET_DBP_MEM_USAGE()) AS T",
+	"name" : "Partition Memory",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT TOTAL_LOG_USED_KB, TOTAL_LOG_AVAILABLE_KB, TOTAL_LOG_USED_TOP_KB from SYSIBMADM.LOG_UTILIZATION",
+	"name" : "Log Utilization",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT integer(TBSP_UTILIZATION_PERCENT), TBSP_TYPE, TBSP_CONTENT_TYPE, TBSP_USING_AUTO_STORAGE, TBSP_AUTO_RESIZE_ENABLED, TBSP_STATE, TBSP_TOTAL_SIZE_KB / 1024, TBSP_USED_SIZE_KB / 1024, TBSP_PAGE_TOP * TBSP_PAGE_SIZE / 1024 / 1024 from sysibmadm.TBSP_UTILIZATION",
+	"name" : "Tablespace Utilization",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT SNAPSHOT_TIMESTAMP, NUM_EXECUTIONS, AVERAGE_EXECUTION_TIME_S, STMT_SORTS, SORTS_PER_EXECUTION, DBPARTITIONNUM, MEMBER FROM SYSIBMADM.TOP_DYNAMIC_SQL",
+	"name" : "Top Dynamic SQL",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+	}, {
+	"query" : "SELECT * FROM SYSIBMADM.TBSP_UTILIZATION",
+	"name" : "database Utilization",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT * FROM SYSIBMADM.APPL_PERFORMANCE",
+	"name" : "Application Performance",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+},{
+	"query" : "SELECT * FROM SYSIBMADM.BP_HITRATIO",
+	"name" : "Hit Ratio",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT * FROM SYSIBMADM.BP_READ_IO",
+	"name" : "BP Read IO",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+},{
+	"query" : "SELECT * FROM SYSIBMADM.LOCKS_HELD",
+	"name" : "Locks Held",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT * FROM SYSIBMADM.LOCKWAITS",
+	"name" : "Locks Wait",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+},
+{
+	"query" : "SELECT * FROM SYSIBMADM.LOG_UTILIZATION",
+	"name" : "Log Utilization",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT SNAPSHOT_TIMESTAMP, NUM_EXECUTIONS, AVERAGE_EXECUTION_TIME_S, AVERAGE_EXECUTION_TIME_MS, PREP_TIME_MS, PREP_TIME_PERCENT, DBPARTITIONNUM, MEMBER FROM SYSIBMADM.QUERY_PREP_COST",
+	"name" : "Query Preparation Cost",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT * FROM SYSIBMADM.LOCKS_HELD",
+	"name" : "Locks Held",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT * FROM SYSIBMADM.LOCKWAITS",
+	"name" : "Lock Waits",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT varchar(tbsp_name, 30) as tbsp_name, reclaimable_space_enabled, tbsp_free_pages, tbsp_page_top, tbsp_usable_pages FROM TABLE(MON_GET_TABLESPACE('',-2)) AS t ORDER BY tbsp_free_pages ASC",
+	"name" : "Tablespaces",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT LOG_UTILIZATION_PERCENT, cast(( TOTAL_LOG_USED_KB/1024) as Integer) as TOTAL_LOG_USED_MB, cast((TOTAL_LOG_AVAILABLE_KB/1024) as Integer) as TOTAL_LOG_AVAILABLE_MB, cast((TOTAL_LOG_USED_TOP_KB/1024) as integer) as TOTAL_LOG_USED_TOP_MB from SYSIBMADM.MON_TRANSACTION_LOG_UTILIZATION",
+	"name" : "Log Utilization Percent",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT AGENT_ID, ELAPSED_TIME_MIN, APPL_STATUS, DBPARTITIONNUM  FROM SYSIBMADM.LONG_RUNNING_SQL ORDER BY DBPARTITIONNUM",
+	"name" : "Long Running Queries",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}, {
+	"query" : "SELECT APPLICATION_HANDLE, TOTAL_CPU_TIME, ROWS_READ, ROWS_RETURNED, TOTAL_WAIT_TIME, TOTAL_SORTS FROM TABLE(MON_GET_UNIT_OF_WORK(NULL,-1)) AS t ORDER BY TOTAL_CPU_TIME DESC",
+	"name" : "CPU Utilization",
+	"type" : "metric",
+	"database" : "testdb",
+	"provider" : "DB2"
+}]

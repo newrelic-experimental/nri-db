@@ -1,0 +1,33 @@
+[
+	{
+		"query" : "SELECT * FROM sys.databases",
+		"name" : "Databases",
+		"type" : "metric",
+		"database" : "databaseName",
+		"provider" : "MSSQL"
+	},
+	{
+		"query" : "SELECT d.Name AS DatabaseName, COUNT(c.connection_id) AS NumberOfConnections, ISNULL(SUM(c.num_reads), 0) AS NumberOfReads, ISNULL(SUM(c.num_writes), 0)	AS NumberOfWrites FROM sys.databases d LEFT JOIN sys.sysprocesses s ON s.dbid = d.database_id LEFT JOIN sys.dm_exec_connections c ON c.session_id = s.spid WHERE (s.spid IS NULL OR c.session_id >= 51) GROUP BY d.Name",
+		"name" : "Connections",
+		"type" : "metric",
+		"database" : "databaseName",
+		"provider" : "MSSQL"
+	},
+	{
+		"query" : "SELECT (SELECT cntr_value * 100.00 FROM sys.dm_os_performance_counters WHERE counter_name = 'Buffer cache hit ratio') / (SELECT cntr_value FROM sys.dm_os_performance_counters WHERE counter_name = 'Buffer cache hit ratio base') AS BufferCacheHitRatio, (SELECT cntr_value FROM sys.dm_os_performance_counters WHERE counter_name = 'Page life expectancy' AND RTRIM([object_name]) LIKE '%:Buffer Manager') AS PageLife",
+		"name" : "Memory Views",
+		"type" : "metric",
+		"database" : "databaseName",
+		"provider" : "MSSQL"
+	},
+	{
+		"query" : "SELECT d.name AS DatabaseName, SUM(a.num_of_bytes_read)	AS BytesRead, SUM(a.num_of_bytes_written) AS BytesWritten, SUM(a.size_on_disk_bytes)	AS SizeInBytes, SUM(a.num_of_reads)	AS NumberOfReads, SUM(a.num_of_writes) AS NumberOfWrites FROM sys.databases d LEFT JOIN sys.dm_io_virtual_file_stats(NULL, NULL) a ON d.database_id = a.database_id GROUP BY d.name ORDER BY d.name",
+		"name" : "File I/O",
+		"type" : "metric",
+		"database" : "databaseName",
+		"provider" : "MSSQL"
+	}
+]
+
+
+

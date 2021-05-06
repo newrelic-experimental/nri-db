@@ -1,0 +1,10 @@
+[
+{
+  "query" : "SELECT num,data,hostname FROM LOG",
+  "name" : "Deduplicate Test",
+  "type" : "metric",
+  "database" : "EMPLOYEE",
+  "provider" : "HSQLDB",
+  "deduplicate": true
+}
+]

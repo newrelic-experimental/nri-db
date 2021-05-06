@@ -1,0 +1,8 @@
+[
+{
+	"query" : "SELECT * FROM EMPLOYEE -- missing name attribute",
+	"type" : "metric",
+	"database" : "EMPLOYEE",
+	"provider" : "HSQLDB"
+}
+]

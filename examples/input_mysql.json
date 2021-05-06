@@ -1,0 +1,9 @@
+[
+	{
+		"query" : "SELECT * FROM performance_schema.global_status",
+		"name" : "Status",
+		"type" : "metric",
+		"database" : "mysql",
+		"provider" : "MYSQL"
+	}
+]

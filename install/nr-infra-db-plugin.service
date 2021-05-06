@@ -1,0 +1,16 @@
+[Unit]
+Description=@description@
+After=syslog.target
+
+[Service]
+Type=simple
+WorkingDirectory=@installdir@
+ExecStart=/usr/bin/java -Xmx512m -cp libs/@name@-@version@.jar:config/ @arguments@ @mainclass@
+MemoryLimit=1G
+Restart=always
+RestartSec=20
+StartLimitInterval=0
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

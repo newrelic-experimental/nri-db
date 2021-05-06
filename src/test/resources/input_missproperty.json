@@ -1,0 +1,9 @@
+[
+{
+	"query" : "SELECT * FROM EMPLOYEE",
+	"name" : "Metric Test",
+	"type" : "NOT_VALID_METRIC",
+	"database" : "EMPLOYEE",
+	"provider" : "HSQLDB"
+}
+]

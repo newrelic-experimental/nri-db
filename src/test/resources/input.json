@@ -1,0 +1,15 @@
+[
+{
+	"query" : "SELECT * FROM EMPLOYEE",
+	"name" : "Metric Test",
+	"type" : "metric",
+	"database" : "EMPLOYEE",
+	"provider" : "HSQLDB"
+}, {
+	"query" : "SELECT * FROM EMPLOYEE",
+	"name" : "Inventory Test",
+	"type" : "inventory",
+	"database" : "EMPLOYEE",
+	"provider" : "HSQLDB"
+}
+]
