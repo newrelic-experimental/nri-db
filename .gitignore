@@ -64,3 +64,6 @@ docker-compose.local.yml
 # Ignore the test package
 test/nri-db/
 test/drivers/
+
+# Ignore the intermediate README.html
+README.html
