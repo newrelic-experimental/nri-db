@@ -13,6 +13,10 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# Backup files
+*.bak
+*.orig
+
 # Eclipse files
 .classpath
 .project
@@ -51,3 +55,12 @@ build
 # Ignore the local plugin.json
 config/plugin.json
 /build-default/
+
+# Ignore local configurations
+.env
+.nridbrc
+docker-compose.local.yml
+
+# Ignore the test package
+test/nri-db/
+test/drivers/

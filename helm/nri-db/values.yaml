@@ -1,0 +1,105 @@
+# Default values for nri-db.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# ------------------------------------------------------------------------------
+# Kubernetes resource settings
+
+# The repository, tag, and pull policy for the deployment image.
+image:
+  repository: nri-db
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# An array of imagePullSecrets
+imagePullSecrets: []
+  # - name: myregistrykey
+
+# Specify an alternate name for the installed chart used to generate
+# resource names
+nameOverride: ""
+
+# Disable name generation and use this value instead 
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# Annotations to add to the deployment pod(s) 
+podAnnotations: {}
+
+# Pod security context values
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# Container security context values
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# Resource limits and requests
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Pod node selectors
+nodeSelector: {}
+
+# Pod tolerations
+tolerations: []
+
+# Pod affinity
+affinity: {}
+
+# ------------------------------------------------------------------------------
+# nri-db application settings
+
+encryptionPassword: ""
+  # The encryption key that was used to encrypt the passwords in your inputs
+
+pluginConfig:
+  accountId: "12345"
+  insertKey: ""
+  agents: []
+    # The list of agents to run, usually one for each database
+    # - name: "LOCAL PG"
+    #   host: "host.docker.internal"
+    #   port: 5432
+    #   username: "postgres"
+    #   password: "ENC(RiWJ20wvxKtSvQ5y+1b5DA==)"
+    #   inputfile: "inputs/input_postgres.json"
+    #   sslConnection: false 
+  inputs: []
+    # The list of input files containing queries to run, one for each agent
+    # Name should be a file name as it will be mounted that way in the inputs/
+    # directory in the container.  The inputfile in the agent config (see above)
+    # should be inputs/file.json where file.json matches the names below.
+    # Queries should be an array of the queries.
+    # 
+    # - name: input_postgres.json
+    #   queries:
+    #   - query: "select * from pg_stat_activity"
+    #     name: "Stat Activity"
+    #     type: "metric"
+    #     database: "postgres"
+    #     provider: "Postgres"
+  

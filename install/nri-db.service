@@ -1,16 +1,17 @@
 [Unit]
-Description=@description@
+Description=New Relic Infrastructure Database integration
 After=syslog.target
 
 [Service]
 Type=simple
 WorkingDirectory=@installdir@
-ExecStart=/usr/bin/java -Xmx512m -cp libs/@name@-@version@.jar:config/ @arguments@ @mainclass@
+ExecStart=./bin/nri-db
 MemoryLimit=1G
 Restart=always
 RestartSec=20
 StartLimitInterval=0
 StartLimitBurst=5
+Environment="JAVA_OPTS=-Xmx512m CLASSPATH=@dbdriverpath@"
 
 [Install]
 WantedBy=multi-user.target
