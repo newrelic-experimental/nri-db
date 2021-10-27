@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nri-db.fullname" . }}-inputs-config
+  labels:
+    {{- include "nri-db.labels" . | nindent 4 }}
+data:
+{{- range .Values.pluginConfig.inputs }}
+  {{ .name }}: |
+    {{ toJson .queries }}
+{{ end }}

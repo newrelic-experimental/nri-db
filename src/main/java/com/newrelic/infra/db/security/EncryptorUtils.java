@@ -8,6 +8,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.PosixFileAttributeView;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.HashSet;
 import java.util.Properties;
@@ -22,29 +23,30 @@ import org.jasypt.properties.PropertyValueEncryptionUtils;
  */
 public class EncryptorUtils {
 
-  public static final Path PASSWORD_FILE_PATH = FileSystems.getDefault().getPath(
-      System.getProperty("user.home"),
+  public static final String NRIDB_ENCRYPTION_PASSWORD_ENV_VAR_NAME = "NRIDB_ENCRYPTION_PASSWORD";
+  public static final Path ENCRYPTION_PASSWORD_FILE_PATH = FileSystems.getDefault().getPath(
+      System.getProperty("user.dir"),
       ".nridbrc"
   );
   private static final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
-  private static final String PASSWORD_HASH_PROPERTY_NAME = "passwordHash";
+  private static final String ENCRYPTION_PASSWORD_PROPERTY_NAME = "encryptionPassword";
   private static final String ENCRYPTION_ALGORITHM = "PBEWITHMD5ANDDES";
   
   /**
-   * Result codes that can be returned from {@link EncryptorUtils#checkPasswordFile()}.
+   * Result codes that can be returned from {@link EncryptorUtils#checkEncryptionPasswordFile()}.
    */
-  public enum PasswordFileCheckResult {
+  public enum EncryptionPasswordFileCheckResult {
     OK,
     MISSING,
     INSECURE
   }
 
   private static StandardPBEStringEncryptor getDecryptor() throws IOException {
-    String passwordHash = getPassword();
+    String encryptionPassword = getEncryptionPassword();
     SimplePBEConfig config = new SimplePBEConfig();
     config.setAlgorithm(ENCRYPTION_ALGORITHM);
     config.setKeyObtentionIterations(1000);
-    config.setPassword(passwordHash);
+    config.setPassword(encryptionPassword);
 
     StandardPBEStringEncryptor encryptor
         = new org.jasypt.encryption.pbe.StandardPBEStringEncryptor();
@@ -53,55 +55,71 @@ public class EncryptorUtils {
     return encryptor;
   }
 
-  public static String encrypt(String pass) throws IOException {
-    return PropertyValueEncryptionUtils.encrypt(pass, getDecryptor());
+  public static String encrypt(String clearText) throws IOException {
+    return PropertyValueEncryptionUtils.encrypt(clearText, getDecryptor());
   }
 
-  public static String decrypt(String encryptedVal) throws IOException {
-    return PropertyValueEncryptionUtils.decrypt(encryptedVal, getDecryptor());
+  public static String decrypt(String encryptedText) throws IOException {
+    return PropertyValueEncryptionUtils.decrypt(encryptedText, getDecryptor());
   }
   
   /**
-   * Check if the password file exists and is properly secured.
+   * Check if the encryption password file exists and is properly secured.
    *
-   * @return a {@link PasswordFileCheckResult}.
+   * @return a {@link EncryptionPasswordFileCheckResult}.
    */
-  public static PasswordFileCheckResult checkPasswordFile() throws IOException {
-    File file = PASSWORD_FILE_PATH.toFile();
+  public static EncryptionPasswordFileCheckResult checkEncryptionPasswordFile() throws IOException {
+    File file = ENCRYPTION_PASSWORD_FILE_PATH.toFile();
     
     if (!file.exists()) {
-      return PasswordFileCheckResult.MISSING;
+      return EncryptionPasswordFileCheckResult.MISSING;
     }
     
-    Set<PosixFilePermission> permissions = Files.getPosixFilePermissions(PASSWORD_FILE_PATH);
+    PosixFileAttributeView posix = Files.getFileAttributeView(
+        ENCRYPTION_PASSWORD_FILE_PATH,
+        PosixFileAttributeView.class
+    );
 
-    for (PosixFilePermission perm : permissions) {
+    if (posix != null) {
+      Set<PosixFilePermission> permissions
+          = posix.readAttributes().permissions();
+
       if (
-          !perm.equals(PosixFilePermission.OWNER_READ)
-          && !perm.equals(PosixFilePermission.OWNER_WRITE)
-          && !perm.equals(PosixFilePermission.OWNER_EXECUTE)
+          permissions.size() != 1
+          || !permissions.contains(PosixFilePermission.OWNER_READ)
       ) {
-        return PasswordFileCheckResult.INSECURE;
+        return EncryptionPasswordFileCheckResult.INSECURE;
+      }
+    } else {
+      if (file.canWrite()) {
+        return EncryptionPasswordFileCheckResult.INSECURE;
       }
     }
     
-    return PasswordFileCheckResult.OK;
+    return EncryptionPasswordFileCheckResult.OK;
   }
 
   /**
-   * Generate a password file.
+   * Generate a new encryption password.
+   */
+  public static String generateEncryptionPassword() {
+    return RandomStringUtils.random(64, EncryptorUtils.CHARS);
+  }
+  
+  /**
+   * Generate an encryption password file.
    *
    * @throws IOException if writing the file fails.
    */
-  public static void generatePasswordFile() throws IOException {
-    String pwd = RandomStringUtils.random(64, EncryptorUtils.CHARS);    
+  public static void generateEncryptionPasswordFile() throws IOException {
+    String encryptionPassword = EncryptorUtils.generateEncryptionPassword();    
     Properties props = new Properties();
     
-    props.setProperty(PASSWORD_HASH_PROPERTY_NAME, pwd);
+    props.setProperty(ENCRYPTION_PASSWORD_PROPERTY_NAME, encryptionPassword);
     props.store(
         new OutputStreamWriter(
             Files.newOutputStream(
-                PASSWORD_FILE_PATH,
+                ENCRYPTION_PASSWORD_FILE_PATH,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE_NEW
             ),
@@ -110,50 +128,70 @@ public class EncryptorUtils {
         ""
     );
     
-    Set<PosixFilePermission> permissions = new HashSet<PosixFilePermission>();
-    
-    permissions.add(PosixFilePermission.OWNER_READ);
-    permissions.add(PosixFilePermission.OWNER_WRITE);
-    Files.setPosixFilePermissions(
-        PASSWORD_FILE_PATH,
-        permissions
+    PosixFileAttributeView posix = Files.getFileAttributeView(
+        ENCRYPTION_PASSWORD_FILE_PATH,
+        PosixFileAttributeView.class
     );
+
+    if (posix != null) {
+      Set<PosixFilePermission> permissions = new HashSet<PosixFilePermission>();
+      
+      permissions.add(PosixFilePermission.OWNER_READ);
+      posix.setPermissions(permissions);
+    } else {
+      ENCRYPTION_PASSWORD_FILE_PATH.toFile().setReadOnly();
+    }
   }
   
   /**
-   * Get the password from the encryption password file.
+   * Get the encryption password from the environment or password file.
    *
    * @return the encryption password.
    * @throws IOException if the password file is missing, insecure,
    *         does not contain a valid password, or cannot be read.
    */
-  public static String getPassword() throws IOException {
-    PasswordFileCheckResult result = checkPasswordFile();
+  public static String getEncryptionPassword() throws IOException {
+    /* 
+     * Check to see if the encryption password was provided via an
+     * environment variable.
+     */
+    String encryptionPassword = System.getenv(
+        EncryptorUtils.NRIDB_ENCRYPTION_PASSWORD_ENV_VAR_NAME
+    );
     
-    if (result != PasswordFileCheckResult.OK) {
+    if (encryptionPassword != null) {
+      return encryptionPassword;
+    }
+    
+    /*
+     * Get the encryption password from the encryption password file.
+     */
+    EncryptionPasswordFileCheckResult result = checkEncryptionPasswordFile();
+    
+    if (result != EncryptionPasswordFileCheckResult.OK) {
       throw new IOException(String.format(
           "The encryption password file at %s is either missing or not properly secured.",
-          PASSWORD_FILE_PATH.toString()
+          ENCRYPTION_PASSWORD_FILE_PATH.toString()
       ));
     }
 
     Properties props = new Properties();
     props.load(
         new InputStreamReader(
-            Files.newInputStream(PASSWORD_FILE_PATH, StandardOpenOption.READ),
+            Files.newInputStream(ENCRYPTION_PASSWORD_FILE_PATH, StandardOpenOption.READ),
             "utf-8"
         )
     );
 
-    String password = props.getProperty(PASSWORD_HASH_PROPERTY_NAME);
+    encryptionPassword = props.getProperty(ENCRYPTION_PASSWORD_PROPERTY_NAME);
     
-    if (password == null || password.trim().equalsIgnoreCase("")) {
+    if (encryptionPassword == null || encryptionPassword.trim().equalsIgnoreCase("")) {
       throw new IOException(String.format(
           "The encryption password file at %s does not contain a valid password.",
-          PASSWORD_FILE_PATH.toString()
+          ENCRYPTION_PASSWORD_FILE_PATH.toString()
       ));
     }
     
-    return password;
+    return encryptionPassword;
   }
 }

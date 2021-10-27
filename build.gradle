@@ -60,6 +60,11 @@ tasks.matching {
     }
 }
 
+tasks.withType(CreateStartScripts) {
+  unixStartScriptGenerator.template = resources.text.fromFile('src/main/resources/unixStartScriptTemplate.txt')
+  windowsStartScriptGenerator.template = resources.text.fromFile('src/main/resources/windowsStartScriptTemplate.txt')
+}
+
 def commonSpec = project.copySpec {
     from('config') {
       into 'config'
@@ -77,9 +82,14 @@ def commonSpec = project.copySpec {
     from("${buildDir}/.keep") {
       into 'logs'
     }
+    from('helm') {
+      into 'helm'
+    }
     from 'README.md'
+    from 'Dockerfile'
+    from 'docker-compose.yml'
 }
-
+    
 distributions {
   main {
     contents {
