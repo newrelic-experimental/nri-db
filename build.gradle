@@ -68,7 +68,10 @@ tasks.withType(CreateStartScripts) {
 def commonSpec = project.copySpec {
     from('config') {
       into 'config'
-      exclude 'plugin.json'
+      include 'plugin.sample.json'
+      include 'logging.properties'
+      exclude '*.bak'
+      exclude '*.orig'
     }
     from('examples') {
       into 'examples'
