@@ -57,6 +57,9 @@ public abstract class DatabaseCommand {
   private String password;
 
   private boolean sslConnection = false;
+  private boolean sslEncrypt = false;
+  private boolean sslTrustServerCert = false;
+  private String sslHostnameInCert = null;
   private String sslTrustStoreLocation = null;
   private String sslTrustStorePassword = null;
   private String version = null;
@@ -272,12 +275,12 @@ public abstract class DatabaseCommand {
       if (this.queryParameterValues.size() > 0) {
         prepareStatement(statement); // Insert any data that we have for the query
       }
-      
+
       if (parser.isStateful()) {
         // Allow the Parser to modify the query if it is keeping state
         parser.prepareStatement(statement);
       }
-      
+
       logger.debug("Executing statement [ " + statement.toString() + " ]");
       rs = statement.executeQuery();
 
@@ -311,7 +314,7 @@ public abstract class DatabaseCommand {
           switch (queryType) {
             case METRIC:
               List<Metric> rowList = parser.parseMetricRow(this.getMetricType(), rs, rsmd);
-  
+
               if (rowList != null && !rowList.isEmpty()) {
                 rowList.addAll(this.getDefaultMetrics()); // Include our defaults
                 result.addMetricResult(rowList);
@@ -368,11 +371,11 @@ public abstract class DatabaseCommand {
         if (statement != null) {
           statement.close();
         }
-        
+
         if (rs != null) {
           rs.close();
         }
-        
+
         if (con != null) {
           con.close();
         }
@@ -393,7 +396,7 @@ public abstract class DatabaseCommand {
         + rowDuplicates
         + " duplicates)"
     );
-    
+
     return result;
   }
 
@@ -566,6 +569,30 @@ public abstract class DatabaseCommand {
     this.sslConnection = sslConnection;
   }
 
+  public boolean isSslEncrypt() {
+    return sslEncrypt;
+  }
+
+  public void setSslEncrypt(boolean sslEncrypt) {
+    this.sslEncrypt = sslEncrypt;
+  }
+
+  public boolean isSslTrustServerCert() {
+    return sslTrustServerCert;
+  }
+
+  public void setSslTrustServerCert(boolean sslTrustServerCert) {
+    this.sslTrustServerCert = sslTrustServerCert;
+  }
+
+  public String getSslHostnameInCert() {
+    return sslHostnameInCert;
+  }
+
+  public void setSslHostnameInCert(String sslHostnameInCert) {
+    this.sslHostnameInCert = sslHostnameInCert;
+  }
+
   public String getSslTrustStoreLocation() {
     return sslTrustStoreLocation;
   }
@@ -723,7 +750,7 @@ public abstract class DatabaseCommand {
       if (options.get("initialQuery") != null) {
         this.setInitialQuery(options.get("initialQuery").getAsString());
       }
-      
+
       if (options.get("queryParameterColumns") != null) {
         this.queryParameterColumns.clear();
 

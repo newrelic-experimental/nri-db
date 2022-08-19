@@ -46,6 +46,9 @@ public class InfraDbAgent extends Agent {
   private String username = null;
   private String password = null;
   private boolean sslConnection = false;
+  private boolean sslEncrypt = false;
+  private boolean sslTrustServerCert = false;
+  private String sslHostnameInCert = null;
   private String sslTrustStoreLocation = null;
   private String sslTrustStorePassword = null;
 
@@ -60,6 +63,9 @@ public class InfraDbAgent extends Agent {
       String password,
       String inputfile,
       boolean sslConnection,
+      boolean sslEncrypt,
+      boolean sslTrustServerCert,
+      String sslHostnameInCert,
       String sslTrustStoreLocation,
       String sslTrustStorePassword
   ) throws IOException {
@@ -70,6 +76,9 @@ public class InfraDbAgent extends Agent {
     this.username = username;
     this.password = password;
     this.sslConnection = sslConnection;
+    this.sslEncrypt = sslEncrypt;
+    this.sslTrustServerCert = sslTrustServerCert;
+    this.sslHostnameInCert = sslHostnameInCert;
     this.sslTrustStoreLocation = sslTrustStoreLocation;
     this.sslTrustStorePassword = sslTrustStorePassword;
 
@@ -127,7 +136,7 @@ public class InfraDbAgent extends Agent {
                 command.getDbType(),
                 list,
                 this.name
-                + "_" 
+                + "_"
                 + command.getName()
                 + "_"
                 + command.getProvider()
@@ -226,6 +235,9 @@ public class InfraDbAgent extends Agent {
         command.setHostname(this.hostname);
         command.setPort(this.port);
         command.setSslConnection(this.sslConnection);
+        command.setSslEncrypt(this.sslEncrypt);
+        command.setSslTrustServerCert(this.sslTrustServerCert);
+        command.setSslHostnameInCert(this.sslHostnameInCert);
         command.setSslTrustStoreLocation(this.sslTrustStoreLocation);
         command.setSslTrustStorePassword(this.sslTrustStorePassword);
 
@@ -251,7 +263,7 @@ public class InfraDbAgent extends Agent {
         /* ******************************************************************
          * Optional Attributes
          * ******************************************************************/
-        
+
         if (jsonObject.get("prefix") != null) {
           command.setPrefix(jsonObject.get("prefix").getAsString());
         }

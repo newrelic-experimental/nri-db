@@ -259,6 +259,9 @@ the following format.
       "password": "ENCRYPTED PASSWORD",
       "inputfile": "PATH TO QUERY JSON FILE",
       "sslConnection": true,
+      "sslEncrypt": true,
+      "sslTrustServerCert": true,
+      "sslHostnameInCert": "HOSTNAME",
       "sslTrustStoreLocation": "TRUST STORE LOCATION",
       "sslTrustStorePassword": "ENCRYPTED TRUST STORE PASSWORD",
       "static": {
@@ -282,6 +285,9 @@ The available settings and their meanings are as follows.
 | password | The password to use to authenticate to the database | string | Y | n/a |
 | inputfile | The path to the [database command file](#database-command-file) | string | Y | n/a |
 | sslConnection | Whether or not to use secure sockets when connecting to the database | boolean | N | false |
+| sslEncrypt | MSSQL only - driver uses TLS encryption | boolean | N | false |
+| sslTrustServerCert | MSSQL only - whether or not the host's SSL cert is automatically trusted via TLS | boolean | N | false |
+| sslHostnameInCert | MSSQL only - The host name to be used to validate the SQL Server TLS/SSL certificate | string | N | '' |
 | sslTrustStoreLocation | The path to the [database command file](#database-command-file) | string | Y if sslConnection = true | '' |
 | sslTrustStorePassword | The path to the [database command file](#database-command-file) | string | Y if sslConnection = true | '' |
 | static | An set of key/value pairs to add to every event for this instance | object | N | null |
@@ -319,7 +325,7 @@ The available settings and their meanings are as follows.
 
 | Setting | Description | Type | Required? | Default |
 | --- | --- | --- | --- | --- |
-| name | A name for the query. This is used only in the event data sent to New Relic and can be used to query different query results via NRQL. | string | Y | n/a | 
+| name | A name for the query. This is used only in the event data sent to New Relic and can be used to query different query results via NRQL. | string | Y | n/a |
 | query | The SQL query to run | string | Y | n/a |
 | type | This field should always be set to `metric` ^ | string | Y | n/a |
 | database | The name of the database to query | string | Y | n/a |

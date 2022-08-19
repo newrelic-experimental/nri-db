@@ -45,6 +45,9 @@ public class InfraDbAgentTest {
         "SA",
         "src/test/resources/input.json",
         false,
+        false,
+        false,
+        null,
         null,
         null
     );

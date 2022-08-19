@@ -40,7 +40,26 @@ public class InfraDbAgentFactory extends AgentFactory {
     if (properties.get("sslConnection") != null) {
       sslConnection = (boolean) properties.get("sslConnection");
     }
-    
+
+    boolean sslEncrypt = false;
+    if (properties.get("sslEncrypt") != null) {
+      sslEncrypt = (boolean) properties.get("sslEncrypt");
+    }
+
+    boolean sslTrustServerCert = false;
+    if (properties.get("sslTrustServerCert") != null) {
+      sslTrustServerCert = (boolean) properties.get("sslTrustServerCert");
+    }
+
+    String sslHostnameInCert = null;
+    if (properties.get("sslHostnameInCert") != null) {
+      try {
+        sslHostnameInCert = (String) properties.get("sslHostnameInCert");
+      } catch (Exception e) {
+        logger.warn("There is no sslHostnameInCert defined");
+      }
+    }
+
     String sslTrustStoreLocation = null;
     if (properties.get("sslTrustStoreLocation") != null) {
       try {
@@ -49,7 +68,7 @@ public class InfraDbAgentFactory extends AgentFactory {
         logger.warn("There is no sslTrustStoreLocation defined");
       }
     }
-    
+
     String sslTrustStorePassword = null;
     if (properties.get("sslTrustStorePassword") != null) {
       try {
@@ -90,7 +109,7 @@ public class InfraDbAgentFactory extends AgentFactory {
         + "] inputfile["
         + inputfile + "]"
     );
-    
+
     return new InfraDbAgent(
         name,
         hostname,
@@ -99,6 +118,9 @@ public class InfraDbAgentFactory extends AgentFactory {
         password,
         inputfile,
         sslConnection,
+        sslEncrypt,
+        sslTrustServerCert,
+        sslHostnameInCert,
         sslTrustStoreLocation,
         sslTrustStorePassword
     );

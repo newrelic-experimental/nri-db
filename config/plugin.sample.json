@@ -20,6 +20,9 @@
       "password": "ENCRYPTED PASSWORD",
       "inputfile": "PATH TO QUERY JSON FILE",
       "sslConnection": true,
+      "sslEncrypt": true,
+      "sslTrustServerCert": true,
+      "sslHostnameInCert": "HOSTNAME",
       "sslTrustStoreLocation": "TRUST STORE LOCATION",
       "sslTrustStorePassword": "ENCRYPTED TRUST STORE PASSWORD"
     }
