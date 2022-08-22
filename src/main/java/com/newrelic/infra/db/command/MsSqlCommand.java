@@ -3,11 +3,14 @@ package com.newrelic.infra.db.command;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The database command class for MSSQL.
  */
 public class MsSqlCommand extends DatabaseCommand {
+  private static final Logger logger = LoggerFactory.getLogger(MsSqlCommand.class);
 
   @Override
   public String getDbType() {
@@ -33,8 +36,38 @@ public class MsSqlCommand extends DatabaseCommand {
     if (getPort() != 0) {
       url += ":" + getPort();
     }
+    url += ";database=" + getDatabase();
 
     url += ";user=" + getUsername() + ";password=" + getPassword();
+
+    if (isSslConnection()) {
+      String location = getSslTrustStoreLocation();
+      String password = getSslTrustStorePassword();
+      String hostnameCert = getSslHostnameInCert();
+
+      if (isSslEncrypt()) {
+        url += ";encrypt=true";
+      } else {
+        url += ";encrypt=false";
+      }
+
+      if (isSslTrustServerCert()) {
+        url += ";trustServerCertificate=true";
+      } else {
+        url += ";trustServerCertificate=false";
+      }
+
+      if (location != null) {
+        url += ";trustStore=" + location;
+      }
+      if (password != null) {
+        url += ";trustStorePassword=" + password;
+      }
+
+      if (hostnameCert != null) {
+        url += ";hostNameInCertificate=" + hostnameCert;
+      }
+    }
 
     // Set URL for data sources
     return DriverManager.getConnection(url);

@@ -16,29 +16,34 @@ repositories {
     jcenter()
 }
 
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 dependencies {
     // Logging
     implementation "org.slf4j:slf4j-api:${project['slf4j-api.version']}"
     implementation "org.slf4j:slf4j-jdk14:${project['slf4j-jdk14.version']}"
-    
+
     // Infra connector and deps
     implementation "com.newrelic.experts:infra_publish:${project['infra_publish.version']}"
     implementation "com.google.code.gson:gson:${project['gson.version']}"
-    
+
     // Password encryption
     implementation "org.jasypt:jasypt:${project['jasypt.version']}"
-    
+
     // Commons lang for string utilities
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
-    
+
     // Built-in database support
     // These drivers use permissive licenses and are therefore OK to distribute.
     implementation "org.postgresql:postgresql:${project['postgresql.version']}"
     implementation "org.hsqldb:hsqldb:${project['hsqldb.version']}"
-    
+
     // Use JUnit test framework.
     testImplementation "junit:junit:${project['junit.version']}"
-    
+
     // Additional database support
     // These drivers user viral licenses and can not be distributed.
     // Clients must install these drivers manually depending on the database(s) being used.
@@ -92,7 +97,7 @@ def commonSpec = project.copySpec {
     from 'Dockerfile'
     from 'docker-compose.yml'
 }
-    
+
 distributions {
   main {
     contents {
