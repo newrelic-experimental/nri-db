@@ -13,6 +13,7 @@ import com.newrelic.infra.db.command.MsSqlCommand;
 import com.newrelic.infra.db.command.MySqlCommand;
 import com.newrelic.infra.db.command.OracleCommand;
 import com.newrelic.infra.db.command.PostgresCommand;
+import com.newrelic.infra.db.command.SybaseCommand;
 import com.newrelic.infra.publish.api.Agent;
 import com.newrelic.infra.publish.api.InventoryReporter;
 import com.newrelic.infra.publish.api.MetricReporter;
@@ -177,6 +178,8 @@ public class InfraDbAgent extends Agent {
       command = new PostgresCommand();
     } else if (provider.equalsIgnoreCase("HSQLDB")) {
       command = new HsqlDbCommand();
+    } else if (provider.equalsIgnoreCase("Sybase")) {
+      command = new SybaseCommand();
     }
     return command;
   }

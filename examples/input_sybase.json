@@ -1,86 +1,86 @@
 [
   {
-    "query" : "SELECT Connections as 'Active Connections' from monState",
+    "query" : "SELECT * from monState",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT BytesSent, BytesReceived FROM monNetworkIO",
+    "query" : "SELECT * FROM monNetworkIO",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "select LogicalReads as 'TotalBuffersRead', PhysicalReads as 'BuffersReadFromDisk', PagesRead, PhysicalWrites as 'BuffersWrittenToDisk', LockRequests, LockWaits from monTempdbActivity",
+    "query" : "select * from monTempdbActivity",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT qtext as 'QueryText', cnt as 'QCount', exec_avg as 'AvgExecutionTime', elap_avg as 'AvgElapsedTime', lio_avg as 'AvgLogicalIO', pio_avg as 'AvgPhysicalIO'  FROM sysquerymetrics",
+    "query" : "SELECT * FROM sysquerymetrics",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT TotalSizeKB, UsedSizeKB, NumStatements, NumSearches, HitCount, NumInserts, NumRemovals FROM monStatementCache",
+    "query" : "SELECT * FROM monStatementCache",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT cache_name as 'CacheName', cache_run_size as 'CacheAllocatedMemMB', cache_run_partitions as 'CacheNumPartitions', pool_io_size as 'BufferSizeKB', pool_run_size as 'PoolMemoryMB'  from syscachepoolinfo",
+    "query" : "SELECT * from syscachepoolinfo",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT LockState, LockType, LockLevel, PageLevel, RowNumber, DBName as 'LockedDBName' from monLocks",
+    "query" : "SELECT * from monLocks",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT CacheID, BufferPools as 'NumBufferPoolsInCache', Stalls, CacheName, Status as 'CacheStatus', Overhead as 'CacheOverhead' from monDataCache",
+    "query" : "SELECT * from monDataCache",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT OperationName, ExecutionTime as 'OperationExecutionTime', ExecutionCnt as 'OperationExecutionCnt' from monSysExecutionTime",
+    "query" : "SELECT * from monSysExecutionTime",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT Application, Transactions as 'CountProcessTransactions', TempDbObjects, TableAccesses, IndexAccesses, LocksHeld, CPUTime, WaitTime, Commits, Rollbacks  FROM monProcessActivity",
+    "query" : "SELECT * FROM monProcessActivity",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT LogicalReads, PhysicalReads, DBName, ObjectName, ObjectType from monProcessObject",
+    "query" : "SELECT * from monProcessObject",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT State, ThreadPoolName, TaskRuns, UserTime, SystemTime, ThreadID from monThread",
+    "query" : "SELECT * from monThread",
     "name" : "Database",
     "type" : "metric",
-    "database" : "databaseName",
+    "database" : "master",
     "provider" : "SYBASE"
   }
 ]

@@ -89,6 +89,8 @@ public abstract class DatabaseCommand {
   private DatabaseParser parser;
   private JsonObject parserOptions;
 
+  private boolean useSsl;
+
   /**
    * Constructor for DatabaseCommand.
    */
@@ -645,6 +647,14 @@ public abstract class DatabaseCommand {
 
   public void setPrefix(String prefix) {
     this.prefix = prefix;
+  }
+
+  public void setUseSsl(boolean useSsl) {
+    this.useSsl = useSsl;
+  }
+
+  public boolean useSsl() {
+    return this.useSsl;
   }
 
   public String getCategory() {
