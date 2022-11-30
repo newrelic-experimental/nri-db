@@ -52,6 +52,7 @@ public class InfraDbAgent extends Agent {
   private String sslHostnameInCert = null;
   private String sslTrustStoreLocation = null;
   private String sslTrustStorePassword = null;
+  private boolean useSsl = false;
 
   /**
    * Create the agent.
@@ -68,7 +69,8 @@ public class InfraDbAgent extends Agent {
       boolean sslTrustServerCert,
       String sslHostnameInCert,
       String sslTrustStoreLocation,
-      String sslTrustStorePassword
+      String sslTrustStorePassword,
+      boolean useSsl
   ) throws IOException {
 
     this.name = name;
@@ -82,6 +84,7 @@ public class InfraDbAgent extends Agent {
     this.sslHostnameInCert = sslHostnameInCert;
     this.sslTrustStoreLocation = sslTrustStoreLocation;
     this.sslTrustStorePassword = sslTrustStorePassword;
+    this.useSsl = useSsl;
 
     commands = getCommands(inputfile);
 
@@ -243,6 +246,7 @@ public class InfraDbAgent extends Agent {
         command.setSslHostnameInCert(this.sslHostnameInCert);
         command.setSslTrustStoreLocation(this.sslTrustStoreLocation);
         command.setSslTrustStorePassword(this.sslTrustStorePassword);
+        command.setUseSsl(this.useSsl);
 
         /* ******************************************************************
          * Required Attributes

@@ -12,7 +12,7 @@ public class SybaseCommand extends DatabaseCommand {
 
   @Override
   public String getDbType() {
-    return "Sybase";
+    return "SYBASE";
   }
 
   @Override

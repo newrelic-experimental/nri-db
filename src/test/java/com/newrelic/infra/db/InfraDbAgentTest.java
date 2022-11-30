@@ -49,7 +49,8 @@ public class InfraDbAgentTest {
         false,
         null,
         null,
-        null
+        null,
+        false
     );
 
     Class.forName("org.hsqldb.jdbc.JDBCDriver");

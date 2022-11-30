@@ -19,7 +19,7 @@ The following database types are supported.
 | MySQL | `com.mysql.cj.jdbc.Driver` | N | MySQL |
 | Postgres | `org.postgresql.Driver` | Y | Postgres |
 | HSQLDB | `org.hsqldb.jdbc.JDBCDriver` | Y | HSQLDB |
-| Sybase | `com.sybase.jdbc42.jdbc.SybDriver` | N | Sybase |
+| Sybase | `com.sybase.jdbc42.jdbc.SybDriver` | N | SYBASE |
 
 ## Installation
 
