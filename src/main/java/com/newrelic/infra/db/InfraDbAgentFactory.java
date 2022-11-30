@@ -81,6 +81,11 @@ public class InfraDbAgentFactory extends AgentFactory {
       }
     }
 
+    boolean useSsl = false;
+    if (properties.get("useSsl") != null) {
+      useSsl = (boolean) properties.get("useSsl");
+    }
+
     String inputfile = (String) properties.get("inputfile");
     String hostname = (String) properties.get("host");
     String username = (String) properties.get("username");
@@ -122,7 +127,8 @@ public class InfraDbAgentFactory extends AgentFactory {
         sslTrustServerCert,
         sslHostnameInCert,
         sslTrustStoreLocation,
-        sslTrustStorePassword
+        sslTrustStorePassword,
+        useSsl
     );
   }
 }

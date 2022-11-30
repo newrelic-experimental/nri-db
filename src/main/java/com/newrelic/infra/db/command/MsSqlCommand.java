@@ -45,6 +45,16 @@ public class MsSqlCommand extends DatabaseCommand {
       String password = getSslTrustStorePassword();
       String hostnameCert = getSslHostnameInCert();
 
+      if (location != null) {
+        url += ";trustStore=" + location;
+      }
+      if (password != null) {
+        url += ";trustStorePassword=" + password;
+      }
+      if (hostnameCert != null) {
+        url += ";hostNameInCertificate=" + hostnameCert;
+      }
+
       if (isSslEncrypt()) {
         url += ";encrypt=true";
       } else {
@@ -55,17 +65,6 @@ public class MsSqlCommand extends DatabaseCommand {
         url += ";trustServerCertificate=true";
       } else {
         url += ";trustServerCertificate=false";
-      }
-
-      if (location != null) {
-        url += ";trustStore=" + location;
-      }
-      if (password != null) {
-        url += ";trustStorePassword=" + password;
-      }
-
-      if (hostnameCert != null) {
-        url += ";hostNameInCertificate=" + hostnameCert;
       }
     }
 

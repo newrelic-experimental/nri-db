@@ -19,6 +19,7 @@ The following database types are supported.
 | MySQL | `com.mysql.cj.jdbc.Driver` | N | MySQL |
 | Postgres | `org.postgresql.Driver` | Y | Postgres |
 | HSQLDB | `org.hsqldb.jdbc.JDBCDriver` | Y | HSQLDB |
+| Sybase | `com.sybase.jdbc42.jdbc.SybDriver` | N | SYBASE |
 
 ## Installation
 
@@ -291,6 +292,7 @@ The available settings and their meanings are as follows.
 | sslTrustStoreLocation | The path to the [database command file](#database-command-file) | string | Y if sslConnection = true | '' |
 | sslTrustStorePassword | The path to the [database command file](#database-command-file) | string | Y if sslConnection = true | '' |
 | static | An set of key/value pairs to add to every event for this instance | object | N | null |
+| useSsl | Sybase only | boolean | N | false |
 
 ### Database Command File
 
