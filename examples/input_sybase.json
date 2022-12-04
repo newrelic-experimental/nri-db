@@ -1,6 +1,6 @@
 [
   {
-    "query" : "SELECT * from monState",
+    "query" : "SELECT * FROM monState",
     "name" : "Database",
     "type" : "metric",
     "database" : "master",
@@ -14,7 +14,7 @@
     "provider" : "SYBASE"
   },
   {
-    "query" : "select * from monTempdbActivity",
+    "query" : "SELECT * FROM monTempdbActivity",
     "name" : "Database",
     "type" : "metric",
     "database" : "master",
@@ -35,28 +35,28 @@
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT * from syscachepoolinfo",
+    "query" : "SELECT * FROM syscachepoolinfo",
     "name" : "Database",
     "type" : "metric",
     "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT * from monLocks",
+    "query" : "SELECT * FROM monLocks",
     "name" : "Database",
     "type" : "metric",
     "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT * from monDataCache",
+    "query" : "SELECT * FROM monDataCache",
     "name" : "Database",
     "type" : "metric",
     "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT * from monSysExecutionTime",
+    "query" : "SELECT * FROM monSysExecutionTime",
     "name" : "Database",
     "type" : "metric",
     "database" : "master",
@@ -70,14 +70,14 @@
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT * from monProcessObject",
+    "query" : "SELECT * FROM monProcessObject",
     "name" : "Database",
     "type" : "metric",
     "database" : "master",
     "provider" : "SYBASE"
   },
   {
-    "query" : "SELECT * from monThread",
+    "query" : "SELECT * FROM monThread",
     "name" : "Database",
     "type" : "metric",
     "database" : "master",

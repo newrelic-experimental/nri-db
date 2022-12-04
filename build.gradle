@@ -74,6 +74,8 @@ def commonSpec = project.copySpec {
     from('config') {
       into 'config'
       include 'plugin.sample.json'
+      include 'plugin.sybase.json'
+      include 'readme.sybase.txt'
       include 'logging.properties'
       exclude '*.bak'
       exclude '*.orig'

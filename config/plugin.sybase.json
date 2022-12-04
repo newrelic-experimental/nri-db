@@ -1,0 +1,22 @@
+{
+  "global": {
+    "account_id": "#######",
+    "insights_mode": {
+      "insights_insert_key": "NRII-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    }
+  },
+  "agents": [
+    {
+      "name": "nri-db/sybase",
+      "host": "EC2AMA1",
+      "port": 5000,
+      "username": "newrelic",
+      "password": "ENC(jpL4V/jcwFckI5tI7WS8IFmjBUSR3CEt)",
+      "inputfile": "./examples/input_sybase.json",
+      "useSsl": false,
+      "static": {
+        "tag": "value"
+      }
+    }
+  ]
+}
